@@ -19,9 +19,23 @@
 
 ### 使用方法
 
+#### 方法一：直接使用已发布的镜像
+
+1. 拉取镜像：
+```bash
+docker pull caoxian088/terraria-server:latest
+```
+
+2. 启动服务器（使用默认设置）：
+```bash
+docker run -d -p 7777:7777 --name terraria -v terraria_worlds:/opt/terraria/worlds caoxian088/terraria-server:latest
+```
+
+#### 方法二：从源码构建
+
 1. 克隆仓库：
 ```bash
-git clone https://github.com/yourusername/terraria-server-docker.git
+git clone https://github.com/caoxian088/terraria-server-docker.git
 cd terraria-server-docker
 ```
 
@@ -30,7 +44,7 @@ cd terraria-server-docker
 docker build -t terraria-server .
 ```
 
-3. 启动服务器（使用默认设置）：
+3. 启动服务器：
 ```bash
 docker run -d -p 7777:7777 --name terraria -v terraria_worlds:/opt/terraria/worlds terraria-server
 ```
@@ -56,7 +70,7 @@ docker logs -f terraria
 | SERVER_PASSWORD |  | 服务器密码（留空表示无密码） |
 | MOTD | 欢迎来到Docker部署的泰拉瑞亚服务器! | 欢迎信息 |
 | SEED |  | 世界种子（留空表示随机） |
-| SECURE | 1 | 服务器安全设置（0=关闭，1=开启） |
+| SECURE | 1 | 服务器安全设置（0=关闭，1=开启，防止作弊和保障多人游戏安全） |
 
 ## 高级使用示例
 
@@ -71,7 +85,7 @@ docker run -d -p 7777:7777 --name terraria \
   -e SERVER_PASSWORD="secretpassword" \
   -e MOTD="欢迎来到专家模式服务器!" \
   -v terraria_worlds:/opt/terraria/worlds \
-  terraria-server
+  caoxian088/terraria-server:latest
 ```
 
 ### 使用固定种子创建世界
@@ -81,7 +95,7 @@ docker run -d -p 7777:7777 --name terraria \
   -e WORLD_NAME="固定种子世界" \
   -e SEED="05162020" \
   -v terraria_worlds:/opt/terraria/worlds \
-  terraria-server
+  caoxian088/terraria-server:latest
 ```
 
 ## 数据持久化
@@ -97,7 +111,7 @@ docker cp terraria:/opt/terraria/worlds /path/to/backup
 默认情况下，服务器使用7777端口。如果需要更改端口，请确保同时修改映射和环境变量：
 
 ```bash
-docker run -d -p 8888:8888 --name terraria -e SERVER_PORT=8888 -v terraria_worlds:/opt/terraria/worlds terraria-server
+docker run -d -p 8888:8888 --name terraria -e SERVER_PORT=8888 -v terraria_worlds:/opt/terraria/worlds caoxian088/terraria-server:latest
 ```
 
 ## 玩家连接
@@ -127,13 +141,14 @@ docker run -d -p 8888:8888 --name terraria -e SERVER_PORT=8888 -v terraria_world
 
 4. 如果服务器内存不足，可以增加容器内存限制：
    ```bash
-   docker run -d -p 7777:7777 --name terraria -m 2G -v terraria_worlds:/opt/terraria/worlds terraria-server
+   docker run -d -p 7777:7777 --name terraria -m 2G -v terraria_worlds:/opt/terraria/worlds caoxian088/terraria-server:latest
    ```
 
 ## 参考资料
 
 - [官方Terraria Wiki - 建立泰拉瑞亚服务器](https://terraria.wiki.gg/zh/wiki/Guide:建立泰拉瑞亚服务器)
 - [Terraria官方网站](https://terraria.org/)
+- [Docker Hub镜像](https://hub.docker.com/r/caoxian088/terraria-server)
 
 ## 许可证
 
